@@ -12,7 +12,14 @@ const UserWorkoutForm = ({ onSubmit }) => {
     e.preventDefault(); // Prevent default form submission
     const newWorkout = { name, duration, date };
 
- 
+    // Send POST request to API
+    fetch('/api/workouts', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newWorkout),
+    })
 
 }
 
