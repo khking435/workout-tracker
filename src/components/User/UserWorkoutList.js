@@ -4,7 +4,10 @@ import React from 'react';
 const UserWorkoutList = ({ workouts }) => {
     return (
         <ul>
-          
+            {/* Render list of workouts */}
+            {workouts.map(workout => (
+               
+            ))}
         </ul>
     );
 };
