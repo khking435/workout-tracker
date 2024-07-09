@@ -1,0 +1,40 @@
+/* navbar.css */
+.navbar {
+  background-color: #4CAF50; 
+  overflow: hidden;
+}
+
+.navbar-brand {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.navbar-links {
+  float: right;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li {
+  float: left;
+}
+
+.navbar-links li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar-links li a:hover {
+  background-color: #ddd;
+  color: black;
+}
