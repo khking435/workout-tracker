@@ -9,7 +9,7 @@ const App = () => {
 
     // Fetch workouts from API on component mount
     useEffect(() => {
-        fetch('/api/workouts')
+        fetch(' http://localhost:3000/api/workouts')
             .then(response => response.json())
             .then(data => setWorkouts(data))
             .catch(error => console.error('Error fetching workouts:', error));
@@ -17,16 +17,15 @@ const App = () => {
 
     // Function to handle new workout submission
     const handleNewWorkout = (newWorkout) => {
-      // Add new workout to current list
-        setWorkouts([...workouts, newWorkout]); 
+        setWorkouts([...workouts, newWorkout]); // Add new workout to current list
     };
 
     return (
-        <div>
-            <h1>Workout Tracker</h1>
+        <div className="container">
+            <h1 className="mt-4 mb-4">Workout Tracker</h1>
             {/* User workout form component */}
             <UserWorkoutForm onSubmit={handleNewWorkout} />
-            <h2>Workouts</h2>
+            <h2 className="mt-4 mb-4">Workouts</h2>
             {/* User workout list component */}
             <UserWorkoutList workouts={workouts} />
         </div>

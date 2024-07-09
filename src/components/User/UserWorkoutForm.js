@@ -13,7 +13,7 @@ const UserWorkoutForm = ({ onSubmit }) => {
         const newWorkout = { name, duration, date };
 
         // Send POST request to API
-        fetch('/api/workouts', {
+        fetch('http://localhost:3000/api/workouts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -32,36 +32,44 @@ const UserWorkoutForm = ({ onSubmit }) => {
     };
 
     return (
-        // Form element with submit handler
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>Name:</label>
+        // Form element with Bootstrap styling
+        <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: 'auto' }}>
+            <div className="mb-3">
+                <label htmlFor="name" className="form-label">Name:</label>
                 <input
                     type="text"
+                    className="form-control"
+                    id="name"
                     value={name}
-                    // Update name state
-                    onChange={(e) => setName(e.target.value)} 
+                    onChange={(e) => setName(e.target.value)}
+                    style={{ width: '100%' }}
                 />
             </div>
-            <div>
-                <label>Duration:</label>
+            <div className="mb-3">
+                <label htmlFor="duration" className="form-label">Duration:</label>
                 <input
                     type="text"
+                    className="form-control"
+                    id="duration"
                     value={duration}
-                    // Update duration state
-                    onChange={(e) => setDuration(e.target.value)} 
+                    onChange={(e) => setDuration(e.target.value)}
+                    style={{ width: '100%' }}
                 />
             </div>
-            <div>
-                <label>Date:</label>
+            <div className="mb-3">
+                <label htmlFor="date" className="form-label">Date:</label>
                 <input
                     type="date"
+                    className="form-control"
+                    id="date"
                     value={date}
-                    // Update date state
-                    onChange={(e) => setDate(e.target.value)} 
+                    onChange={(e) => setDate(e.target.value)}
+                    style={{ width: '100%' }}
                 />
             </div>
-            <button type="submit">Add Workout</button>
+            <div className="d-grid gap-2">
+                <button type="submit" className="btn btn-primary btn-block">Add Workout</button>
+            </div>
         </form>
     );
 };
