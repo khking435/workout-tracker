@@ -8,6 +8,10 @@ const Navbar = () => {
     <nav className="navbar">
       <span className="navbar-brand">Fit Fussion</span>
       <ul className="navbar-links">
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/workouts">Workouts</Link></li>
+        <li><Link to="/exercises">Exercises</Link></li>
+        {/* Add more links as needed */}
       </ul>
     </nav>
   );
