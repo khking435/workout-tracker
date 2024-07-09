@@ -1,3 +1,4 @@
+// src/components/ExerciseList.jsx
 import React, { useState, useEffect } from 'react';
 
 const ExerciseList = () => {
@@ -12,16 +13,16 @@ const ExerciseList = () => {
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-4">Exercises</h2>
+      <h2>Exercises</h2>
       <ul>
         {exercises.map(exercise => (
-          <li key={exercise.id} className="mb-2 p-2 border rounded">
-            {exercise.name} - Sets: {exercise.sets}, Reps: {exercise.reps}, Weight: {exercise.weight} lbs
+          <li key={exercise.id}>
+            {exercise.name} - Sets: {exercise.sets}, Reps: {exercise.reps}, Weight: {exercise.weight}
           </li>
         ))}
       </ul>
     </div>
   );
-}
+};
 
 export default ExerciseList;
