@@ -7,7 +7,8 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <span className="navbar-brand">Fit Fussion</span>
-      
+      <ul className="navbar-links">
+      </ul>
     </nav>
   );
 };
