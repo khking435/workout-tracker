@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
-import { exercises as allExercises } from './ExerciseList';
+import { useParams } from 'react-router-dom';
+import allExercises from './ExerciseList'; // Adjusted import based on ExerciseList structure
+import { useNavigate } from 'react-router-dom';
 
 const WorkoutForm = () => {
   const { id } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate(); // Using useNavigate for navigation
   const [workout, setWorkout] = useState({
     name: '',
     date: '',
@@ -56,7 +57,7 @@ const WorkoutForm = () => {
       method: method,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(workout)
-    }).then(() => history.push('/workouts'));
+    }).then(() => navigate('/workouts')); // Navigate to /workouts after successful form submission
   };
 
   return (
@@ -89,7 +90,7 @@ const WorkoutForm = () => {
         </div>
         <button type="submit">Save Workout</button>
       </form>
-      <button onClick={() => history.push('/workouts')}>Cancel</button>
+      <button onClick={() => navigate('/workouts')}>Cancel</button> {/* Using navigate for cancel button */}
     </div>
   );
 };

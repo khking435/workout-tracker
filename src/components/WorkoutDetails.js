@@ -1,22 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const WorkoutDetail = () => {
   const { id } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
   const [workout, setWorkout] = useState(null);
 
   useEffect(() => {
     // Fetch workout details from the backend
     fetch(`/api/workouts/${id}`)
-      .then(response => response.json())
-      .then(data => setWorkout(data));
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch workout details');
+        }
+        return response.json();
+      })
+      .then(data => setWorkout(data))
+      .catch(error => {
+        console.error('Error fetching workout details:', error);
+      });
   }, [id]);
 
   const handleDelete = () => {
     // Delete workout
     fetch(`/api/workouts/${id}`, { method: 'DELETE' })
-      .then(() => history.push('/workouts'));
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to delete workout');
+        }
+        // Navigate to workout list after successful deletion
+        navigate('/workouts');
+      })
+      .catch(error => {
+        console.error('Error deleting workout:', error);
+      });
   };
 
   if (!workout) {
@@ -37,7 +55,7 @@ const WorkoutDetail = () => {
           </li>
         ))}
       </ul>
-      <button onClick={() => history.push(`/workouts/${id}/edit`)}>Edit</button>
+      <button onClick={() => navigate(`/workouts/${id}/edit`)}>Edit</button>
       <button onClick={handleDelete}>Delete</button>
       <Link to="/workouts">Back to Workout List</Link>
     </div>
