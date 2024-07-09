@@ -6,7 +6,11 @@ const UserWorkoutList = ({ workouts }) => {
         <ul>
             {/* Render list of workouts */}
             {workouts.map(workout => (
-               
+                // Each workout is displayed as a list item
+                <li key={workout.id}>
+                    {/* Display workout name, duration, and date */}
+                    {workout.name} - {workout.duration} minutes on {workout.date}
+                </li>
             ))}
         </ul>
     );
