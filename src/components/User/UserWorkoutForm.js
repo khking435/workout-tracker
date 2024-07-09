@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, { useState } from 'react';
 
 // Component for user workout form
 const UserWorkoutForm = ({ onSubmit }) => {
@@ -36,7 +36,7 @@ const UserWorkoutForm = ({ onSubmit }) => {
 
 return (
      // Form element with submit handler
-    <form>
+    <form onSubmit={handleSubmit}>
         <div>
             
             <label>Name:</label>
@@ -79,25 +79,5 @@ return (
     </form>
 
 );
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+};
 export default UserWorkoutForm;
