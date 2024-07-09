@@ -75,6 +75,7 @@ return (
                             onChange={(e) => setDate(e.target.value)} // Update date state
                         />
         </div>
+            <button type="submit">Add Workout</button>
     </form>
 
 );
