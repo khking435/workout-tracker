@@ -66,7 +66,15 @@ return (
                             value={duration}
                             onChange={(e) => setDuration(e.target.value)} // Update duration state
                         />
-            </div>
+        </div>
+        <div>
+                    <label>Date:</label>
+                        <input
+                            type="date"
+                            value={date}
+                            onChange={(e) => setDate(e.target.value)} // Update date state
+                        />
+        </div>
     </form>
 
 );
