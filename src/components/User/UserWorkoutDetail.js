@@ -5,11 +5,12 @@ const UserWorkoutDetails = ({ workout }) => {
     return (
         <div>
             {/* Display workout name as a heading */}
-            <h2>{workout.name}</h2>
+            <h2>Name{workout.name}</h2>
             {/* Display workout duration */}
             <p>Duration: {workout.duration} minutes</p>
             {/* Display workout date */}
-          
+            <p>Date: {workout.date}</p>
+
         </div>
     );
 };
