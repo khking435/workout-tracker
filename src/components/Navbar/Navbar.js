@@ -6,7 +6,9 @@ import './Navbar.css'; // Import your CSS file
 const Navbar = () => {
   return (
     <nav className="navbar">
-   
+      <span className="navbar-brand">Fit Fussion</span>
+      
+    </nav>
   );
 };
 
