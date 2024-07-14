@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import allExercises from './ExerciseList'; // Adjusted import based on ExerciseList structure
+import allExercises from '../ExercisesPage.js/ExerciseList'; // Adjusted import based on ExerciseList structure
 import { useNavigate } from 'react-router-dom';
 
 const WorkoutForm = () => {
