@@ -1,5 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
 import WorkoutList from "./components/WorkoutList";
 import WorkoutDetail from "./components/WorkoutDetails";
 import WorkoutForm from "./components/WorkoutForm";
@@ -17,10 +20,11 @@ const App = () => {
       <div className="App">
         <div className="container mx-auto mt-4">
           <Navbar />
-          <UserWorkoutForm/>
-
           <Routes>
-            <Route path="/" element={<WorkoutList />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/workoutList" element={<WorkoutList />} />
             <Route path="/workouts/:id" element={<WorkoutDetail />} />
             <Route path="/add-workout" element={<WorkoutForm />} />
             <Route path="/exercises" element={<ExerciseList />} />
