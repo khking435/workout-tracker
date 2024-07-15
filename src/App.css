@@ -1,3 +1,9 @@
+/* 
+ * Styles for the main App component.
+ * This CSS file is imported into the main App.js file.
+ * The styles define the layout and appearance of the App component.
+ */
+
 .App {
   text-align: center;
 }
@@ -7,6 +13,7 @@
   pointer-events: none;
 }
 
+/* This media query applies a spinning animation to the App-logo when the user's browser prefers not to reduce motion. */
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -14,7 +21,7 @@
 }
 
 .App-header {
-  background-color: #fafcff;
+  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -28,6 +35,7 @@
   color: #61dafb;
 }
 
+/* This keyframe animation defines the spinning motion for the App-logo. */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -36,3 +44,4 @@
     transform: rotate(360deg);
   }
 }
+
