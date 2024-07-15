@@ -1,40 +1,48 @@
 /* navbar.css */
+
+/* Styles for the navbar */
 .navbar {
-  background-color: #4CAF50; 
-  overflow: hidden;
+  background-color: #4CAF50; /* Green background */
+  overflow: hidden; /* Hide overflow */
 }
 
+/* Styles for the navbar brand */
 .navbar-brand {
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 20px;
+  float: left; /* Place on the left */
+  display: block; /* Display as a block */
+  color: #f2f2f2; /* White text */
+  text-align: center; /* Center the text */
+  padding: 14px 16px; /* Add padding */
+  text-decoration: none; /* Remove underline */
+  font-size: 20px; /* Increase font size */
 }
 
+/* Styles for the navbar links */
 .navbar-links {
-  float: right;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+  float: right; /* Place on the right */
+  list-style-type: none; /* Remove bullet points */
+  margin: 0; /* Remove margin */
+  padding: 0; /* Remove padding */
 }
 
+/* Styles for each navbar link */
 .navbar-links li {
-  float: left;
+  float: left; /* Place side by side */
 }
 
+/* Styles for each navbar link */
 .navbar-links li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
+  display: block; /* Display as a block */
+  color: white; /* White text */
+  text-align: center; /* Center the text */
+  padding: 14px 16px; /* Add padding */
+  text-decoration: none; /* Remove underline */
+  font-size: 17px; /* Increase font size */
 }
 
+/* Styles for when navbar link is hovered */
 .navbar-links li a:hover {
-  background-color: #ddd;
-  color: black;
+  background-color: #ddd; /* Light gray background */
+  color: black; /* Black text */
 }
+
