@@ -1,70 +1,121 @@
-# Getting Started with Create React App
+# WORKOUT TRACKER APP
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## DATE : 15 JULY 2024
 
-## Available Scripts
+### BY: Jason, Adrian, Gift omandi & Sumeya Mohamed
 
-In the project directory, you can run:
+### Description of the project -
 
-### `npm start`
+A Workout Tracker app that lets users manage their workout routines, track exercises, and monitor progress over time. The application features a React frontend for user interaction and a Flask backend for managing data.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### How to Use
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### Installation requirements
 
-### `npm test`
+- Access to the Internet.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- A computer with Node installed
 
-### `npm run build`
+- A computer with bash terminal.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Installation Instruction
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Front End setup :
+        1 Clone the repository:
+            Copy code
+                git clone
+                    <git@github.com:khking435/workout-backend-.git>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+        2 Navigate to the project folder:
+             bash
+            cd frontend-folder
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+        3 Install dependencies:
+           npm install
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+        4 Start the development server:
+                npm run dev
+BackEnd setup :
+        1 Clone the repository:
+            git clone
+                <git@github.com:khking435/workout-backend-.git>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+        2 Navigate to the project folder:
+            cd backend-folder
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+        3 Create and activate a virtual environment:
+            python -m venv venv
 
-## Learn More
+            source venv/bin/activate  
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+        4 Install dependencies:
+            pip install -r requirements.txt
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+        5 Set up the database:
+            flask db init
+            flask db migrate -m "Initial migration"
+            flask db upgrade
 
-### Code Splitting
+            Seed the database:
+            bash
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+       6  Run the Flask application:
+            flask run
 
-### Analyzing the Bundle Size
+## Running the code
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+ After cloning the repository, navigate to the project folder on your bash terminal.
 
-### Making a Progressive Web App
+ Run the Code on VS Code
+After cloning the repositories and setting up the backend and frontend as described above, you can run the code and interact with the application on your local machine. The frontend will be available at <http://localhost:3000> and the backend API at <http://localhost:5000>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Live Link-
 
-### Advanced Configuration
+## Technologies Used
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Backend:
+        Flask
+        SQLAlchemy
+        Python
+        Frontend:
+React
+            css
+            ReactApp
+            Bootstrap CSS
+General:
+            VS Code
+            GitHub
 
-### Deployment
+## Support and Contact Details
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Incase of any query or issues with the app or code  feel free to reach us on;
 
-### `npm run build` fails to minify
+Nathaniel Jaden: <nathaniel.jaden@student.moringaschool.com>
+Adrian Kahura :<adrian.kahura@student.moringaschool.com>
+Gift Omandi :<gift.omandi@student.moringaschool.com>
+Sumeya Mohamed : <sumnicky99@gmail.com>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## License
+
+MIT License
+
+Copyright (c) 2024 sumnicky99
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. 
