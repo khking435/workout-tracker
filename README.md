@@ -2,7 +2,7 @@
 
 ## DATE : 15 JULY 2024
 
-### BY: Jason, Adrian, Gift omandi & Sumeya Mohamed
+### BY: Nathaniel Jaden, Adrian Kahura, Gift omandi & Sumeya Mohamed
 
 ### Description of the project -
 
