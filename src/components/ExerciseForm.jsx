@@ -23,7 +23,7 @@ const ExerciseForm = () => {
           ...values
         };
   
-        fetch('/api/exercises', {
+        fetch('/https://localhost:5555/exercises', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

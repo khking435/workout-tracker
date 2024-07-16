@@ -8,7 +8,7 @@ const WorkoutList = () => {
 
   useEffect(() => {
     // Fetch workouts from the backend
-    fetch('/api/workouts')
+    fetch('/https://localhost:5555/workouts')
       .then(response => response.json())
       .then(data => setWorkouts(data));
   }, []);
