@@ -8,9 +8,10 @@ const WorkoutList = () => {
 
   useEffect(() => {
     // Fetch workouts from the backend
-    fetch('/https://localhost:5555/workouts')
+    fetch('http://localhost:5555/workouts') // Corrected URL format
       .then(response => response.json())
-      .then(data => setWorkouts(data));
+      .then(data => setWorkouts(data))
+      .catch(error => console.error('Error fetching workouts:', error)); // Handle fetch errors
   }, []);
 
   const handleFilterChange = (e) => {
