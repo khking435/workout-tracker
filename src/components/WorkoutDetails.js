@@ -9,7 +9,7 @@ const WorkoutDetail = () => {
 
   useEffect(() => {
     // Fetch workout details from the backend
-    fetch(`/api/workouts/${id}`)
+    fetch(`/https://localhost:5555/workouts/${id}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Failed to fetch workout details');

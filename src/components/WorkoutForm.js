@@ -17,7 +17,7 @@ const WorkoutForm = () => {
   useEffect(() => {
     if (id) {
       // Fetch workout details for editing
-      fetch(`/api/workouts/${id}`)
+      fetch(`/https://localhost:5555/workouts/${id}`)
         .then(response => response.json())
         .then(data => setWorkout(data));
     }
@@ -51,7 +51,7 @@ const WorkoutForm = () => {
     e.preventDefault();
 
     const method = id ? 'PUT' : 'POST';
-    const url = id ? `/api/workouts/${id}` : '/api/workouts';
+    const url = id ? `/https://localhost:5555/workouts/${id}` : '/https://localhost:5555/workouts';
 
     fetch(url, {
       method: method,
