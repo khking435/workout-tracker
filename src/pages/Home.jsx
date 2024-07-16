@@ -8,8 +8,8 @@ const HomePage = () => {
       <header className="header">
         <div className="navbar-brand">FitFusion</div>
         <nav className="navbar">
-          <Link to="/about-us" className="navbar-link">About Us</Link>
-          <button className="button" onClick={() => alert('Button Clicked')}>Contact Us</button>
+          <Link to="./About" className="navbar-link">About Us</Link>
+          <Link to="/contact" className="button">Contact Us</Link> {/* Link to Contact Us page */}
         </nav>
       </header>
 
