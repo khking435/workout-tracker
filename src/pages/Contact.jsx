@@ -7,13 +7,13 @@ const ContactUs = () => {
             <p>If you have any questions, feel free to reach out to us at:</p>
             <ul>
                 <li>
-                    <a href="mailto:support@example.com">support@example.com</a>
+                    <a href="FitFusion:support@gmail.com">support@gmail.com</a>
                 </li>
                 <li>
-                    <a href="mailto:info@example.com">info@example.com</a>
+                    <a href="FitFusion:info@gmail.com">info@gmail.com</a>
                 </li>
                 <li>
-                    <a href="mailto:sales@example.com">sales@example.com</a>
+                    <a href="FitFusion:gmail@example.com">sales@gmail.com</a>
                 </li>
             </ul>
         </div>
