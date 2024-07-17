@@ -1,12 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_migrate import Migrate
-from database_models.db import db
-from database_models.db import User
-from database_models.db import Workout
-from database_models.db import UserWorkout
+from database_models.db import db, User, Workout, UserWorkout, Exercise
 from flask_cors import CORS
 from flask_restful import Api
-from flask_cors import CORS
 
 
 # Initializing Flask application
@@ -30,6 +26,7 @@ api = Api(app)
 def index():
     """Route to welcome message"""
     return 'Hello, Fitness World!'
+
 
 # Routes for Users
 @app.route('/users', methods=['GET'])
@@ -90,7 +87,6 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
     return jsonify({'message': 'User deleted successfully'}), 200
-
 
 
 # Routes for Workouts
@@ -193,9 +189,73 @@ def delete_userworkout(userworkout_id):
     return jsonify({'message': 'UserWorkout deleted successfully'}), 200
 
 
+# Routes for Exercises
+
+@app.route('/exercises', methods=['GET'])
+def get_all_exercises():
+    """Route to get all exercises"""
+    exercises = Exercise.query.all()
+    exercises_list = [{'id': exercise.id, 'name': exercise.name, 'sets': exercise.sets, 'reps': exercise.reps, 'weight': exercise.weight} for exercise in exercises]
+    return jsonify(exercises_list), 200
+
+@app.route('/exercises/<int:exercise_id>', methods=['GET'])
+def get_exercise(exercise_id):
+    """Route to get a specific exercise by ID"""
+    exercise = Exercise.query.get(exercise_id)
+    if not exercise:
+        return jsonify({'error': 'Exercise not found'}), 404
+    exercise_data = {'id': exercise.id, 'name': exercise.name, 'sets': exercise.sets, 'reps': exercise.reps, 'weight': exercise.weight}
+    return jsonify(exercise_data), 200
+
+@app.route('/exercises', methods=['POST'])
+def create_exercise():
+    """Route to create a new exercise"""
+    data = request.json
+    name = data.get('name')
+    sets = data.get('sets')
+    reps = data.get('reps')
+    weight = data.get('weight')
+
+    if not name or sets is None or reps is None or weight is None:
+        return jsonify({'error': 'Missing exercise name, sets, reps, or weight'}), 400
+
+    new_exercise = Exercise(name=name, sets=sets, reps=reps, weight=weight)
+    db.session.add(new_exercise)
+    db.session.commit()
+
+    return jsonify({'message': 'Exercise created successfully'}), 201
+
+@app.route('/exercises/<int:exercise_id>', methods=['PUT'])
+def update_exercise(exercise_id):
+    """Route to update an existing exercise"""
+    exercise = Exercise.query.get(exercise_id)
+    if not exercise:
+        return jsonify({'error': 'Exercise not found'}), 404
+
+    data = request.json
+    exercise.name = data.get('name', exercise.name)
+    exercise.sets = data.get('sets', exercise.sets)
+    exercise.reps = data.get('reps', exercise.reps)
+    exercise.weight = data.get('weight', exercise.weight)
+
+    db.session.commit()
+    return jsonify({'message': 'Exercise updated successfully'}), 200
+
+@app.route('/exercises/<int:exercise_id>', methods=['DELETE'])
+def delete_exercise(exercise_id):
+    """Route to delete an exercise"""
+    exercise = Exercise.query.get(exercise_id)
+    if not exercise:
+        return jsonify({'error': 'Exercise not found'}), 404
+
+    db.session.delete(exercise)
+    db.session.commit()
+    return jsonify({'message': 'Exercise deleted successfully'}), 200
+
+
 # Code to print all registered routes
 #with app.test_request_context():
-   # print([str(rule) for rule in app.url_map.iter_rules()])
+#    print([str(rule) for rule in app.url_map.iter_rules()])
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
