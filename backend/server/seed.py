@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 from faker import Faker
 from app import app
 from database_models.db import db, User, Workout, Exercise, UserWorkout
@@ -7,6 +7,9 @@ from database_models.db import db, User, Workout, Exercise, UserWorkout
 faker = Faker()
 
 with app.app_context():
+     # Drop all tables
+    db.drop_all()
+
     # Create all tables
     db.create_all()
 
@@ -67,13 +70,22 @@ with app.app_context():
     user_workouts = []
     for user in users:
         workout = faker.random_element(elements=workouts)
-        user_workout = UserWorkout(user_id=user.id, workout_id=workout.id)
+        startdate = faker.date_between(start_date='-1y', end_date='today')  # Random start date within the past year
+        completiondate = faker.date_between(start_date=startdate, end_date='+30d')  # Completion date within 30 days of start date
+        feedback = faker.sentence()  # Random feedback text
+        user_workout = UserWorkout(
+            user_id=user.id, 
+            workout_id=workout.id,
+            startdate=startdate,
+            completiondate=completiondate,
+            feedback=feedback
+        )
         user_workouts.append(user_workout)
     
     # Print sample of generated user workouts
     print("Sample of generated user workouts:")
     for user_workout in user_workouts[:3]:  # Print first 3 user workouts as sample
-        print(f"User ID: {user_workout.user_id}, Workout ID: {user_workout.workout_id}")
+        print(f"User ID: {user_workout.user_id}, Workout ID: {user_workout.workout_id}, Start Date: {user_workout.startdate}, Completion Date: {user_workout.completiondate}, Feedback: {user_workout.feedback}")
 
     # Confirm before adding user workouts to the database
     confirm = input("Do you want to add these user workouts to the database? (yes/no): ")

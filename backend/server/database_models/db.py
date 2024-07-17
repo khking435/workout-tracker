@@ -1,13 +1,14 @@
-# Import SQLAlchemy for database handling
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-
-# Importing MetaData
 from sqlalchemy import MetaData
 
-metadata = MetaData()
+# Initialize Flask application
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 
-# Create a SQLAlchemy object
-db = SQLAlchemy(metadata=metadata)
+# Initialize SQLAlchemy with metadata
+metadata = MetaData()
+db = SQLAlchemy(app, metadata=metadata)
 
 # Define the Exercise model
 class Exercise(db.Model):
@@ -65,12 +66,30 @@ class User(db.Model):
 # Define the UserWorkout model
 class UserWorkout(db.Model):
     __tablename__ = "Userworkouts"  # Changed the table name
+
     # Primary key column
     id = db.Column(db.Integer, primary_key=True, nullable=False)
     # Foreign key to the User model
     user_id = db.Column(db.Integer, db.ForeignKey('Users.id'), nullable=False)
     # Foreign key to the Workout model
     workout_id = db.Column(db.Integer, db.ForeignKey('Workouts.id'), nullable=False)
+    # Additional fields
+    startdate = db.Column(db.Date, nullable=False)
+    completiondate = db.Column(db.Date, nullable=False)
+    feedback = db.Column(db.Text, nullable=False)
 
     def __repr__(self):
         return f"<UserWorkout {self.id}: User ID {self.user_id}, Workout ID {self.workout_id}>"
+
+# Add CLI command to reset the database
+@app.cli.command('reset-db')
+def reset_db():
+    """Drops all tables and recreates the database."""
+    with app.app_context():
+        db.drop_all()
+        db.create_all()
+        print("Database reset: all tables dropped and recreated.")
+
+# Run the application
+if __name__ == '__main__':
+    app.run(debug=True)

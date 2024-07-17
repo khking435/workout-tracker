@@ -145,7 +145,14 @@ def delete_workout(workout_id):
 def get_all_userworkouts():
     """Route to get all userworkouts"""
     userworkouts = UserWorkout.query.all()
-    userworkouts_list = [{'id': userworkout.id, 'user_id': userworkout.user_id, 'workout_id': userworkout.workout_id} for userworkout in userworkouts]
+    userworkouts_list = [{
+        'id': userworkout.id, 
+        'user_id': userworkout.user_id, 
+        'workout_id': userworkout.workout_id,
+        'startdate': userworkout.startdate.isoformat(),  # Convert date to ISO format
+        'completiondate': userworkout.completiondate.isoformat(),  # Convert date to ISO format
+        'feedback': userworkout.feedback
+    } for userworkout in userworkouts]
     return jsonify(userworkouts_list), 200
 
 @app.route('/userworkouts/<int:userworkout_id>', methods=['GET'])
@@ -154,10 +161,15 @@ def get_userworkout(userworkout_id):
     userworkout = UserWorkout.query.get(userworkout_id)
     if not userworkout:
         return jsonify({'error': 'UserWorkout not found'}), 404
-    userworkout_data = {'id': userworkout.id, 'user_id': userworkout.user_id, 'workout_id': userworkout.workout_id}
+    userworkout_data = {
+        'id': userworkout.id,
+        'user_id': userworkout.user_id,
+        'workout_id': userworkout.workout_id,
+        'startdate': userworkout.startdate.isoformat(),  # Convert date to ISO format
+        'completiondate': userworkout.completiondate.isoformat(),  # Convert date to ISO format
+        'feedback': userworkout.feedback
+    }
     return jsonify(userworkout_data), 200
-
-
 
 @app.route('/userworkouts', methods=['POST'])
 def create_userworkout():
@@ -165,17 +177,31 @@ def create_userworkout():
     data = request.json
     user_id = data.get('user_id')
     workout_id = data.get('workout_id')
+    startdate = data.get('startdate')
+    completiondate = data.get('completiondate')
+    feedback = data.get('feedback')
 
-    if not user_id or not workout_id:
-        return jsonify({'error': 'Missing user_id or workout_id'}), 400
+    if not user_id or not workout_id or not startdate or not completiondate or not feedback:
+        return jsonify({'error': 'Missing required fields'}), 400
 
-    new_userworkout = UserWorkout(user_id=user_id, workout_id=workout_id)
+    # Convert startdate and completiondate from string to date
+    try:
+        startdate = datetime.fromisoformat(startdate)
+        completiondate = datetime.fromisoformat(completiondate)
+    except ValueError:
+        return jsonify({'error': 'Invalid date format'}), 400
+
+    new_userworkout = UserWorkout(
+        user_id=user_id,
+        workout_id=workout_id,
+        startdate=startdate,
+        completiondate=completiondate,
+        feedback=feedback
+    )
     db.session.add(new_userworkout)
     db.session.commit()
 
     return jsonify({'message': 'UserWorkout created successfully'}), 201
-
-
 
 @app.route('/userworkouts/<int:userworkout_id>', methods=['DELETE'])
 def delete_userworkout(userworkout_id):
