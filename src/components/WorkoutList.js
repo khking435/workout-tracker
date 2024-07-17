@@ -8,9 +8,15 @@ const WorkoutList = () => {
 
   useEffect(() => {
     // Fetch workouts from the backend
-    fetch('/https://localhost:5555/workouts')
-      .then(response => response.json())
-      .then(data => setWorkouts(data));
+    fetch('http://localhost:5555/workouts') // Ensure this matches your backend URL
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => setWorkouts(data))
+      .catch(error => console.error('Error fetching workouts:', error));
   }, []);
 
   const handleFilterChange = (e) => {
@@ -23,7 +29,12 @@ const WorkoutList = () => {
 
   const filteredWorkouts = workouts
     .filter(workout => workout.name.toLowerCase().includes(filter.toLowerCase()))
-    .sort((a, b) => a[sort].localeCompare(b[sort]));
+    .sort((a, b) => {
+      if (sort === 'date') {
+        return new Date(a.date) - new Date(b.date);
+      }
+      return a[sort].localeCompare(b[sort]);
+    });
 
   return (
     <div>
