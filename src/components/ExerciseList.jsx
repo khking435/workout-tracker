@@ -6,7 +6,7 @@ const ExerciseList = () => {
   const [sort, setSort] = useState('name');
 
   useEffect(() => {
-    fetch("/api/exercises")
+    fetch("http://127.0.0.1:5555/exercises")
       .then(response => response.json())
       .then(data => setExercises(data))
       .catch(error => console.error('Error fetching exercises:', error));
