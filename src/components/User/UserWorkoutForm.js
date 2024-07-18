@@ -8,6 +8,7 @@ const UserWorkoutForm = () => {
     startDate: "",
     completionDate: "",
     feedback: "",
+    userId: "" // Add userId to state
   });
 
   const handleChange = (e) => {
@@ -21,30 +22,52 @@ const UserWorkoutForm = () => {
     const token = localStorage.getItem("token");
 
     // Format dates as ISO strings
-    const formattedStartDate = new Date(workout.startDate).toISOString().split('T')[0];
-    const formattedCompletionDate = new Date(workout.completionDate).toISOString().split('T')[0];
+    const formattedStartDate = new Date(workout.startDate).toISOString();
+    const formattedCompletionDate = new Date(workout.completionDate).toISOString();
 
     fetch("http://localhost:5555/userworkouts", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`, // Add Authorization header
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
+        user_id: workout.userId, // Send userId in request
         workout_id: workout.workoutId,
         startdate: formattedStartDate,
         completiondate: formattedCompletionDate,
         feedback: workout.feedback,
       }),
     })
-      .then(() => navigate("/user-workouts")) 
-      .catch((error) => console.error("Error:", error)); // Handle errors
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to add user workout');
+        }
+        return response.json();
+      })
+      .then(() => navigate("/user-workouts"))
+      .catch((error) => console.error("Error:", error));
   };
 
   return (
     <div className="container mt-4">
       <h1 className="text-center mb-4">New User Workout</h1>
       <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="userId" className="form-label">
+            User ID
+          </label>
+          <input
+            type="text"
+            id="userId"
+            name="userId"
+            value={workout.userId}
+            onChange={handleChange}
+            className="form-control"
+            placeholder="User ID"
+            required
+          />
+        </div>
         <div className="mb-3">
           <label htmlFor="workoutId" className="form-label">
             Workout ID
