@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const WorkoutForm = () => {
-  const { id } = useParams(); // Get the ID from the URL
+  const { id } = useParams();
   const navigate = useNavigate(); // Navigation hook
   const [workout, setWorkout] = useState({
     name: '',
     date: '',
     duration: '',
     type: ''
-  }); // State to hold workout details
+  }); 
 
   useEffect(() => {
     if (id) {
@@ -18,18 +18,18 @@ const WorkoutForm = () => {
         .then(response => response.json())
         .then(data => setWorkout(data));
     }
-  }, [id]); // Re-fetch workout details when ID changes
+  }, [id]); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setWorkout({ ...workout, [name]: value }); // Update state with new input value
+    setWorkout({ ...workout, [name]: value }); 
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const method = id ? 'PUT' : 'POST'; // Determine HTTP method based on whether it's an edit or new entry
-    const url = id ? `http://localhost:5555/workouts/${id}` : 'http://localhost:5555/workouts'; // Determine URL based on whether it's an edit or new entry
+    const method = id ? 'PUT' : 'POST'; 
+    const url = id ? `http://localhost:5555/workouts/${id}` : 'http://localhost:5555/workouts'; 
 
     fetch(url, {
       method: method,

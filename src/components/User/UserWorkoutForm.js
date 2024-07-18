@@ -13,7 +13,7 @@ const UserWorkoutForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const method = workout.id ? 'PUT' : 'POST'; // Use workout.id to determine if it's an edit or new entry
+    const method = workout.id ? 'PUT' : 'POST';
     const url = workout.id ? `http://localhost:5555/userworkouts/${workout.id}` : 'http://localhost:5555/userworkouts';
 
     // Format dates as ISO strings
@@ -41,7 +41,7 @@ const UserWorkoutForm = () => {
     })
     .catch(error => {
       console.error('Error adding user workout:', error.message);
-      // Optionally, update state or display an error message to the user
+
     });
   };
 
