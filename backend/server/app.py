@@ -1,23 +1,35 @@
 from flask import Flask, jsonify, request
 from flask_migrate import Migrate
+from database_models.db import Exercise, db, User, Workout, UserWorkout
 from flask_cors import CORS
 from flask_restful import Api
-from database_models.db import db, User, Workout, UserWorkout, Exercise
-from datetime import datetime
+from flask_bcrypt import Bcrypt
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity
+from datetime import timedelta, datetime
+
 
 # Initializing Flask application
 app = Flask(__name__)
-CORS(app)
 
 # Configuring the database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'your_secret_key'
+app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=30)  # Set the expiration time for access tokens
+
+# Initializing CORS with credentials and allowed origins
+CORS(app, supports_credentials=True, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 # Initializing the migrate
 migrate = Migrate(app, db)
 
 # Initializing the app with the db
 db.init_app(app)
+
+# Initializing Flask-JWT-Extended and Flask-Bcrypt
+jwt = JWTManager(app)
+bcrypt = Bcrypt(app)
 
 api = Api(app)
 
@@ -26,6 +38,35 @@ def index():
     """Route to welcome message"""
     return 'Hello, Fitness World!'
 
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.json
+    email = data.get('email')
+    password = data.get('password')
+    user = User.query.filter_by(email=email).first()
+
+    if user and bcrypt.check_password_hash(user.password, password):
+        access_token = create_access_token(identity={'id': user.id, 'username': user.username})
+        return jsonify({'token': access_token}), 200
+    else:
+        return jsonify({'error': 'Invalid email or password'}), 401
+
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.json
+    username = data.get('username')
+    email = data.get('email')
+    password = data.get('password')
+
+    if not username or not email or not password:
+        return jsonify({'error': 'Missing username, email, or password'}), 400
+
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+    new_user = User(username=username, email=email, password=hashed_password)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({'message': 'User registered successfully'}), 201
 
 # Routes for Users
 @app.route('/users', methods=['GET'])

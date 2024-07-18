@@ -14,6 +14,8 @@ import UserWorkoutForm from "./components/User/UserWorkoutForm";
 import UserWorkoutDetail from "./components/User/UserWorkoutDetail";
 import Sidebar from "./components/sidebar.js";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Signup from "./components/SignUp.jsx";
+import Login from "./components/LogIn.jsx";
 
 // Main App component
 const App = () => {
@@ -28,6 +30,8 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/workoutList" element={<WorkoutList />} />
             <Route path="/workouts/:id" element={<WorkoutDetail />} />
             <Route path="/add-workout" element={<WorkoutForm />} />
