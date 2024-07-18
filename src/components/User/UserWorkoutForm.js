@@ -3,72 +3,97 @@ import React, { useState } from 'react';
 // Component for user workout form
 const UserWorkoutForm = ({ onSubmit }) => {
     // State hooks for form fields
-    const [name, setName] = useState('');
-    const [duration, setDuration] = useState('');
-    const [date, setDate] = useState('');
+    const [userID, setUserID] = useState('');
+    const [workoutID, setWorkoutID] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [completionDate, setCompletionDate] = useState('');
+    const [feedback, setFeedback] = useState('');
 
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault(); // Prevent default form submission
-        const newWorkout = { name, duration, date };
+        const newUserWorkout = { userID, workoutID, startDate, completionDate, feedback };
 
         // Send POST request to API
-        fetch('http://127.0.0.1:5000/workouts', {
+        fetch('http://127.0.0.1:5000/userworkouts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(newWorkout),
+            body: JSON.stringify(newUserWorkout),
         })
             .then(response => response.json())
             .then(data => {
-                onSubmit(data); // Call onSubmit prop with new workout data
+                onSubmit(data); // Call onSubmit prop with new user workout data
                 // Clear form fields
-                setName('');
-                setDuration('');
-                setDate('');
+                setUserID('');
+                setWorkoutID('');
+                setStartDate('');
+                setCompletionDate('');
+                setFeedback('');
             })
-            .catch(error => console.error('Error adding workout:', error));
+            .catch(error => console.error('Error adding user workout:', error));
     };
 
     return (
         // Form element with Bootstrap styling
         <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: 'auto' }}>
             <div className="mb-3">
-                <label htmlFor="name" className="form-label">Name:</label>
+                <label htmlFor="userID" className="form-label">User ID:</label>
                 <input
                     type="text"
                     className="form-control"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    id="userID"
+                    value={userID}
+                    onChange={(e) => setUserID(e.target.value)}
                     style={{ width: '100%' }}
                 />
             </div>
             <div className="mb-3">
-                <label htmlFor="duration" className="form-label">Duration:</label>
+                <label htmlFor="workoutID" className="form-label">Workout ID:</label>
                 <input
                     type="text"
                     className="form-control"
-                    id="duration"
-                    value={duration}
-                    onChange={(e) => setDuration(e.target.value)}
+                    id="workoutID"
+                    value={workoutID}
+                    onChange={(e) => setWorkoutID(e.target.value)}
                     style={{ width: '100%' }}
                 />
             </div>
             <div className="mb-3">
-                <label htmlFor="date" className="form-label">Date:</label>
+                <label htmlFor="startDate" className="form-label">Start Date:</label>
                 <input
                     type="date"
                     className="form-control"
-                    id="date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
+                    id="startDate"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    style={{ width: '100%' }}
+                />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="completionDate" className="form-label">Completion Date:</label>
+                <input
+                    type="date"
+                    className="form-control"
+                    id="completionDate"
+                    value={completionDate}
+                    onChange={(e) => setCompletionDate(e.target.value)}
+                    style={{ width: '100%' }}
+                />
+            </div>
+            <div className="mb-3">
+                <label htmlFor="feedback" className="form-label">Feedback:</label>
+                <textarea
+                    className="form-control"
+                    id="feedback"
+                    value={feedback}
+                    onChange={(e) => setFeedback(e.target.value)}
                     style={{ width: '100%' }}
                 />
             </div>
             <div className="d-grid gap-2">
-                <button type="submit" className="btn btn-primary btn-block">Add Workout</button>
+                <button type="submit" className="btn btn-primary btn-block">Add User Workout</button>
             </div>
         </form>
     );

@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import WorkoutForm from './WorkoutForm';
 
 const WorkoutList = () => {
   const [workouts, setWorkouts] = useState([]);
   const [filter, setFilter] = useState('');
   const [sort, setSort] = useState('date');
-  const [showWorkoutForm, setShowWorkoutForm] = useState(false);
 
   useEffect(() => {
     // Fetch workouts from the backend
-    fetch('http://localhost:5555/workouts') // Ensure this matches your backend URL
+    fetch('http://localhost:5555/workouts') 
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -21,7 +19,6 @@ const WorkoutList = () => {
       .catch(error => console.error('Error fetching workouts:', error));
   }, []);
 
-  const handleShowWorkoutForm = () => setShowWorkoutForm(!showWorkoutForm);
 
   const handleFilterChange = (e) => {
     setFilter(e.target.value);
@@ -50,10 +47,7 @@ const WorkoutList = () => {
         <option value="duration">Duration</option>
         <option value="type">Type</option>
       </select>
-      <button onClick={handleShowWorkoutForm}>
-        {showWorkoutForm ? 'Hide Workout Form' : 'Show Workout Form'}
-      </button>
-      {showWorkoutForm && <WorkoutForm />}
+      <Link to="/add-workout">Add Workout</Link>  
       <ul>
         {filteredWorkouts.map(workout => (
           <li key={workout.id}>
@@ -63,6 +57,7 @@ const WorkoutList = () => {
           </li>
         ))}
       </ul>
+     
     </div>
   );
 };

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import UserWorkoutForm from './UserWorkoutForm';
+import { Link } from 'react-router-dom';
 
 const UserWorkoutList = () => {
   const [userWorkouts, setUserWorkouts] = useState([]);
   const [filter, setFilter] = useState('');
   const [sort, setSort] = useState('startdate');
-  const [showUserWorkoutForm, setShowUserWorkoutForm] = useState(false);
 
 
   useEffect(() => {
@@ -23,7 +22,6 @@ const UserWorkoutList = () => {
     setSort(e.target.value);
   };
 
-  const handleShowUserWorkoutForm = () => setShowUserWorkoutForm(!showUserWorkoutForm);
 
   const filteredUserWorkouts = userWorkouts
     .filter(userWorkout => 
@@ -54,10 +52,7 @@ const UserWorkoutList = () => {
           <option value="completiondate">Completion Date</option>
         </select>
       </div>
-      <button onClick={handleShowUserWorkoutForm}>
-        {showUserWorkoutForm ? 'Hide User Workout Form' : 'Show User Workout Form'}
-      </button>
-      {showUserWorkoutForm && <UserWorkoutForm />}
+      <Link to="/add-user-workout">Add User Workout</Link>
       <ul>
         {filteredUserWorkouts.map(userWorkout => (
           <li key={userWorkout.id}>
