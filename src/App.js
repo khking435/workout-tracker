@@ -13,6 +13,7 @@ import UserWorkoutList from "./components/User/UserWorkoutList";
 import UserWorkoutForm from "./components/User/UserWorkoutForm";
 import UserWorkoutDetail from "./components/User/UserWorkoutDetail";
 import Sidebar from "./components/sidebar.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Main App component
 const App = () => {
