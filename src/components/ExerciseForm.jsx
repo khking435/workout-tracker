@@ -52,80 +52,85 @@ const ExerciseForm = () => {
   });
 
   return (
-    <div>
+    <div className="container mt-4">
+      <h2 className="text-center mb-4">Add a new exercise</h2>
       <form onSubmit={formik.handleSubmit}>
-        <h2>Add a new exercise</h2>
-        <div>
-          <label htmlFor="name">Name</label>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label">Name</label>
           <input
             id="name"
             name="name"
             type="text"
+            className={`form-control ${formik.touched.name && formik.errors.name ? 'is-invalid' : ''}`}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.name}
           />
           {formik.touched.name && formik.errors.name ? (
-            <div>{formik.errors.name}</div>
+            <div className="invalid-feedback">{formik.errors.name}</div>
           ) : null}
         </div>
-        <div>
-          <label htmlFor="sets">Sets</label>
+        <div className="mb-3">
+          <label htmlFor="sets" className="form-label">Sets</label>
           <input
             id="sets"
             name="sets"
             type="number"
+            className={`form-control ${formik.touched.sets && formik.errors.sets ? 'is-invalid' : ''}`}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.sets}
           />
           {formik.touched.sets && formik.errors.sets ? (
-            <div>{formik.errors.sets}</div>
+            <div className="invalid-feedback">{formik.errors.sets}</div>
           ) : null}
         </div>
-        <div>
-          <label htmlFor="reps">Reps</label>
+        <div className="mb-3">
+          <label htmlFor="reps" className="form-label">Reps</label>
           <input
             id="reps"
             name="reps"
             type="number"
+            className={`form-control ${formik.touched.reps && formik.errors.reps ? 'is-invalid' : ''}`}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.reps}
           />
           {formik.touched.reps && formik.errors.reps ? (
-            <div>{formik.errors.reps}</div>
+            <div className="invalid-feedback">{formik.errors.reps}</div>
           ) : null}
         </div>
-        <div>
-          <label htmlFor="weight">Weight (lbs)</label>
+        <div className="mb-3">
+          <label htmlFor="weight" className="form-label">Weight (lbs)</label>
           <input
             id="weight"
             name="weight"
             type="number"
+            className={`form-control ${formik.touched.weight && formik.errors.weight ? 'is-invalid' : ''}`}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.weight}
           />
           {formik.touched.weight && formik.errors.weight ? (
-            <div>{formik.errors.weight}</div>
+            <div className="invalid-feedback">{formik.errors.weight}</div>
           ) : null}
         </div>
-        <div>
-          <label htmlFor="workout_id">Workout ID</label>
+        <div className="mb-3">
+          <label htmlFor="workout_id" className="form-label">Workout ID</label>
           <input
             id="workout_id"
             name="workout_id"
             type="number"
+            className={`form-control ${formik.touched.workout_id && formik.errors.workout_id ? 'is-invalid' : ''}`}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.workout_id}
           />
           {formik.touched.workout_id && formik.errors.workout_id ? (
-            <div>{formik.errors.workout_id}</div>
+            <div className="invalid-feedback">{formik.errors.workout_id}</div>
           ) : null}
         </div>
-        <button type="submit" disabled={formik.isSubmitting}>Add Exercise</button>
+        <button type="submit" className="btn btn-primary" disabled={formik.isSubmitting}>Add Exercise</button>
       </form>
     </div>
   );

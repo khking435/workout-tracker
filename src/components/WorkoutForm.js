@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-// Component for creating or editing a workout
 const WorkoutForm = () => {
   const { id } = useParams(); // Get the ID from the URL
   const navigate = useNavigate(); // Navigation hook
@@ -40,20 +39,30 @@ const WorkoutForm = () => {
   };
 
   return (
-    <div>
-      <h1>{id ? 'Edit Workout' : 'New Workout'}</h1>
+    <div className="container mt-4">
+      <h1 className="text-center mb-4">{id ? 'Edit Workout' : 'New Workout'}</h1>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="name" value={workout.name} onChange={handleChange} placeholder="Name" required />
-        <input type="date" name="date" value={workout.date} onChange={handleChange} required />
-        <input type="text" name="duration" value={workout.duration} onChange={handleChange} placeholder="Duration" required />
-        <input type="text" name="type" value={workout.type} onChange={handleChange} placeholder="Type" required />
-
-        <button type="submit">Save Workout</button>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label">Name</label>
+          <input type="text" id="name" name="name" value={workout.name} onChange={handleChange} className="form-control" placeholder="Name" required />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="date" className="form-label">Date</label>
+          <input type="date" id="date" name="date" value={workout.date} onChange={handleChange} className="form-control" required />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="duration" className="form-label">Duration</label>
+          <input type="text" id="duration" name="duration" value={workout.duration} onChange={handleChange} className="form-control" placeholder="Duration" required />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="type" className="form-label">Type</label>
+          <input type="text" id="type" name="type" value={workout.type} onChange={handleChange} className="form-control" placeholder="Type" required />
+        </div>
+        <button type="submit" className="btn btn-primary">Save Workout</button>
       </form>
-      <button onClick={() => navigate('/workoutList')}>Cancel</button> 
+      {id && <button className="btn btn-secondary mt-2" onClick={() => navigate('/workoutList')}>Cancel</button>}
     </div>
   );
 };
 
 export default WorkoutForm;
-

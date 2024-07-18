@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const UserWorkoutForm = ({ userId }) => {
+const UserWorkoutForm = () => {
   const navigate = useNavigate();
   const [workout, setWorkout] = useState({
     workoutId: '',
@@ -51,15 +51,26 @@ const UserWorkoutForm = ({ userId }) => {
   };
 
   return (
-    <div>
-      <h1>New User Workout</h1>
+    <div className="container mt-4">
+      <h1 className="text-center mb-4">New User Workout</h1>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="workoutId" value={workout.workoutId} onChange={handleChange} placeholder="Workout ID" required />
-        <input type="date" name="startDate" value={workout.startDate} onChange={handleChange} required />
-        <input type="date" name="completionDate" value={workout.completionDate} onChange={handleChange} required />
-        <input type="text" name="feedback" value={workout.feedback} onChange={handleChange} placeholder="Feedback" required />
-
-        <button type="submit">Add User Workout</button>
+        <div className="mb-3">
+          <label htmlFor="workoutId" className="form-label">Workout ID</label>
+          <input type="text" id="workoutId" name="workoutId" value={workout.workoutId} onChange={handleChange} className="form-control" placeholder="Workout ID" required />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="startDate" className="form-label">Start Date</label>
+          <input type="date" id="startDate" name="startDate" value={workout.startDate} onChange={handleChange} className="form-control" required />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="completionDate" className="form-label">Completion Date</label>
+          <input type="date" id="completionDate" name="completionDate" value={workout.completionDate} onChange={handleChange} className="form-control" required />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="feedback" className="form-label">Feedback</label>
+          <input type="text" id="feedback" name="feedback" value={workout.feedback} onChange={handleChange} className="form-control" placeholder="Feedback" required />
+        </div>
+        <button type="submit" className="btn btn-primary">Add User Workout</button>
       </form>
     </div>
   );
