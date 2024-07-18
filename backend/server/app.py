@@ -1,18 +1,17 @@
 from flask import Flask, jsonify, request
 from flask_migrate import Migrate
-from database_models.db import db, User, Workout, UserWorkout, Exercise
 from flask_cors import CORS
 from flask_restful import Api
-
+from database_models.db import db, User, Workout, UserWorkout, Exercise
+from datetime import datetime
 
 # Initializing Flask application
 app = Flask(__name__)
+CORS(app)
 
 # Configuring the database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-CORS(app)
 
 # Initializing the migrate
 migrate = Migrate(app, db)
@@ -241,15 +240,17 @@ def create_exercise():
     sets = data.get('sets')
     reps = data.get('reps')
     weight = data.get('weight')
+    workout_id = data.get('workout_id')
 
-    if not name or sets is None or reps is None or weight is None:
-        return jsonify({'error': 'Missing exercise name, sets, reps, or weight'}), 400
+    if not name or sets is None or reps is None or weight is None or workout_id is None:
+        return jsonify({'error': 'Missing exercise name, sets, reps, weight, or workout_id'}), 400
 
-    new_exercise = Exercise(name=name, sets=sets, reps=reps, weight=weight)
+    new_exercise = Exercise(name=name, sets=sets, reps=reps, weight=weight, workout_id=workout_id)
     db.session.add(new_exercise)
     db.session.commit()
 
     return jsonify({'message': 'Exercise created successfully'}), 201
+
 
 @app.route('/exercises/<int:exercise_id>', methods=['PUT'])
 def update_exercise(exercise_id):

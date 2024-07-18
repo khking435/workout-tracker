@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
+from datetime import datetime
 
 # Initialize Flask application
 app = Flask(__name__)
@@ -25,6 +26,13 @@ class Exercise(db.Model):
     reps = db.Column(db.Integer, nullable=False)
     # Weight used in the exercise
     weight = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, name, sets, reps, weight, workout_id):
+        self.name = name
+        self.sets = sets
+        self.reps = reps
+        self.weight = weight
+        self.workout_id = workout_id
 
     def __repr__(self):
         return f"<Exercise {self.id}: {self.name}, Workout ID: {self.workout_id}>"
@@ -92,4 +100,4 @@ def reset_db():
 
 # Run the application
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=5555 ,debug=True)
