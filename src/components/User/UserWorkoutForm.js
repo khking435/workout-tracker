@@ -15,7 +15,7 @@ const UserWorkoutForm = ({ onSubmit }) => {
         const newUserWorkout = { userID, workoutID, startDate, completionDate, feedback };
 
         // Send POST request to API
-        fetch('http://127.0.0.1:5000/userworkouts', {
+        fetch('http://127.0.0.1:5555/userworkouts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

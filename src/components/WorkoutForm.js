@@ -8,10 +8,8 @@ const WorkoutForm = () => {
     name: '',
     date: '',
     duration: '',
-    type: '',
-    exercises: []
+    type: ''
   });
-  const [allExercises, setAllExercises] = useState([]);
 
   useEffect(() => {
     if (id) {
@@ -20,35 +18,11 @@ const WorkoutForm = () => {
         .then(response => response.json())
         .then(data => setWorkout(data));
     }
-
-    // Fetch all exercises for the dropdown
-    fetch("http://localhost:5555/exercises")
-      .then(response => response.json())
-      .then(data => setAllExercises(data));
   }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setWorkout({ ...workout, [name]: value });
-  };
-
-  const handleExerciseChange = (index, e) => {
-    const { name, value } = e.target;
-    const newExercises = [...workout.exercises];
-    newExercises[index] = { ...newExercises[index], [name]: value };
-    setWorkout({ ...workout, exercises: newExercises });
-  };
-
-  const handleAddExercise = (exercise) => {
-    setWorkout({
-      ...workout,
-      exercises: [...workout.exercises, { ...exercise, sets: '', reps: '', weight: '' }]
-    });
-  };
-
-  const handleRemoveExercise = (index) => {
-    const newExercises = workout.exercises.filter((_, i) => i !== index);
-    setWorkout({ ...workout, exercises: newExercises });
   };
 
   const handleSubmit = (e) => {
@@ -61,7 +35,7 @@ const WorkoutForm = () => {
       method: method,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(workout)
-    }).then(() => navigate('/workouts')); 
+    }).then(() => navigate('/workoutList')); 
   };
 
   return (
@@ -73,28 +47,9 @@ const WorkoutForm = () => {
         <input type="text" name="duration" value={workout.duration} onChange={handleChange} placeholder="Duration" required />
         <input type="text" name="type" value={workout.type} onChange={handleChange} placeholder="Type" required />
 
-        <h2>Exercises</h2>
-        {workout.exercises.map((exercise, index) => (
-          <div key={index}>
-            <input type="text" name="name" value={exercise.name} onChange={(e) => handleExerciseChange(index, e)} placeholder="Exercise Name" required />
-            <input type="number" name="sets" value={exercise.sets} onChange={(e) => handleExerciseChange(index, e)} placeholder="Sets" required />
-            <input type="number" name="reps" value={exercise.reps} onChange={(e) => handleExerciseChange(index, e)} placeholder="Reps" required />
-            <input type="number" name="weight" value={exercise.weight} onChange={(e) => handleExerciseChange(index, e)} placeholder="Weight" required />
-            <button type="button" onClick={() => handleRemoveExercise(index)}>Remove</button>
-          </div>
-        ))}
-        <div>
-          <h3>Add Exercise</h3>
-          <select onChange={(e) => handleAddExercise(allExercises.find(ex => ex.id === parseInt(e.target.value)))}>
-            <option value="">Select an exercise</option>
-            {allExercises.map(exercise => (
-              <option key={exercise.id} value={exercise.id}>{exercise.name}</option>
-            ))}
-          </select>
-        </div>
         <button type="submit">Save Workout</button>
       </form>
-      <button onClick={() => navigate('/workouts')}>Cancel</button> 
+      <button onClick={() => navigate('/workoutList')}>Cancel</button> 
     </div>
   );
 };

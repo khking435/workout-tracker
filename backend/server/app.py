@@ -112,19 +112,19 @@ def create_workout():
     """Route to create a new workout"""
     data = request.json
     name = data.get('name')
-    date = data.get('date')
+    workout_date_str = data.get('date')
+    workout_date = datetime.strptime(workout_date_str, '%Y-%m-%d').date()  # Convert string to date object
     duration = data.get('duration')
     type = data.get('type')
 
-    if not name or not date or not duration or not type:
-        return jsonify({'error': 'Missing workout name, date, duration, or type'}), 400
-
-    new_workout = Workout(name=name, date=date, duration=duration, type=type)
-    db.session.add(new_workout)
-    db.session.commit()
-
-    return jsonify({'message': 'Workout created successfully'}), 201
-
+    new_workout = Workout(name=name, date=workout_date, duration=duration, type=data.get('type'))
+    try:
+        db.session.add(new_workout)
+        db.session.commit()
+        return jsonify({'message': 'Workout added successfully'}), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/workouts/<int:workout_id>', methods=['DELETE'])
 def delete_workout(workout_id):
