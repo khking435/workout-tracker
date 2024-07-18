@@ -14,7 +14,7 @@ const UserWorkoutForm = () => {
     e.preventDefault();
 
     const method = workout.id ? 'PUT' : 'POST';
-    const url = workout.id ? `http://localhost:5555/userworkouts/${workout.id}` : 'http://localhost:5555/userworkouts';
+    const url = workout.id ? `http://127.0.0.1:5000/userworkouts${workout.id}` : 'http://127.0.0.1:5000/userworkouts';
 
     // Format dates as ISO strings
     const formattedStartDate = new Date(workout.startDate).toISOString().split('T')[0];
