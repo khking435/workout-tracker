@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import allExercises from './ExerciseList'; // Adjusted import based on ExerciseList structure
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const WorkoutForm = () => {
   const { id } = useParams();
-  const navigate = useNavigate(); // Using useNavigate for navigation
+  const navigate = useNavigate(); 
   const [workout, setWorkout] = useState({
     name: '',
     date: '',
@@ -13,14 +11,20 @@ const WorkoutForm = () => {
     type: '',
     exercises: []
   });
+  const [allExercises, setAllExercises] = useState([]);
 
   useEffect(() => {
     if (id) {
       // Fetch workout details for editing
-      fetch(`/https://localhost:5555/workouts/${id}`)
+      fetch(`http://localhost:5555/workouts/${id}`)
         .then(response => response.json())
         .then(data => setWorkout(data));
     }
+
+    // Fetch all exercises for the dropdown
+    fetch("http://localhost:5555/exercises")
+      .then(response => response.json())
+      .then(data => setAllExercises(data));
   }, [id]);
 
   const handleChange = (e) => {
@@ -51,13 +55,13 @@ const WorkoutForm = () => {
     e.preventDefault();
 
     const method = id ? 'PUT' : 'POST';
-    const url = id ? `/https://localhost:5555/workouts/${id}` : '/https://localhost:5555/workouts';
+    const url = id ? `http://localhost:5555/workouts/${id}` : 'http://localhost:5555/workouts';
 
     fetch(url, {
       method: method,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(workout)
-    }).then(() => navigate('/workouts')); // Navigate to /workouts after successful form submission
+    }).then(() => navigate('/workouts')); 
   };
 
   return (
@@ -90,7 +94,7 @@ const WorkoutForm = () => {
         </div>
         <button type="submit">Save Workout</button>
       </form>
-      <button onClick={() => navigate('/workouts')}>Cancel</button> {/* Using navigate for cancel button */}
+      <button onClick={() => navigate('/workouts')}>Cancel</button> 
     </div>
   );
 };

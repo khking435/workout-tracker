@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import UserWorkoutForm from './UserWorkoutForm';
 
 const UserWorkoutList = () => {
   const [userWorkouts, setUserWorkouts] = useState([]);
   const [filter, setFilter] = useState('');
   const [sort, setSort] = useState('startdate');
+  const [showUserWorkoutForm, setShowUserWorkoutForm] = useState(false);
+
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/userworkouts")
+    fetch("http://127.0.0.1:5555/userworkouts")
       .then(response => response.json())
       .then(data => setUserWorkouts(data))
       .catch(error => console.error('Error fetching user workouts:', error));
@@ -19,6 +22,8 @@ const UserWorkoutList = () => {
   const handleSortChange = (e) => {
     setSort(e.target.value);
   };
+
+  const handleShowUserWorkoutForm = () => setShowUserWorkoutForm(!showUserWorkoutForm);
 
   const filteredUserWorkouts = userWorkouts
     .filter(userWorkout => 
@@ -49,6 +54,10 @@ const UserWorkoutList = () => {
           <option value="completiondate">Completion Date</option>
         </select>
       </div>
+      <button onClick={handleShowUserWorkoutForm}>
+        {showUserWorkoutForm ? 'Hide User Workout Form' : 'Show User Workout Form'}
+      </button>
+      {showUserWorkoutForm && <UserWorkoutForm />}
       <ul>
         {filteredUserWorkouts.map(userWorkout => (
           <li key={userWorkout.id}>

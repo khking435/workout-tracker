@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import ExerciseForm from './ExerciseForm';
 
 const ExerciseList = () => {
   const [exercises, setExercises] = useState([]);
+  const [showExerciseForm, setShowExerciseForm] = useState(false);
   const [filter, setFilter] = useState('');
   const [sort, setSort] = useState('name');
 
@@ -11,6 +13,9 @@ const ExerciseList = () => {
       .then(data => setExercises(data))
       .catch(error => console.error('Error fetching exercises:', error));
   }, []);
+
+  const handleShowExerciseForm = () => setShowExerciseForm(!showExerciseForm);
+
 
   const handleFilterChange = (e) => {
     setFilter(e.target.value);
@@ -54,6 +59,12 @@ const ExerciseList = () => {
           <option value="weight">Weight</option>
         </select>
       </div>
+      <div>
+      <button onClick={handleShowExerciseForm}>
+        {showExerciseForm ? 'Hide Exercise Form' : 'Show Exercise Form'}
+      </button>
+      {showExerciseForm && <ExerciseForm />}
+    </div>
       <ul>
         {filteredExercises.map(exercise => (
           <li key={exercise.id}>
@@ -62,6 +73,7 @@ const ExerciseList = () => {
         ))}
       </ul>
     </div>
+    
   );
 };
 
