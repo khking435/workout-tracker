@@ -6,7 +6,7 @@ const UserWorkoutList = () => {
   const [sort, setSort] = useState('startdate');
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5555/userworkouts")
+    fetch("http://127.0.0.1:5000/userworkouts")
       .then(response => response.json())
       .then(data => setUserWorkouts(data))
       .catch(error => console.error('Error fetching user workouts:', error));
