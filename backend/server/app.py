@@ -222,10 +222,11 @@ def get_userworkout(userworkout_id):
     }
     return jsonify(userworkout_data), 200
 
+
 @app.route('/userworkouts', methods=['POST'])
 @jwt_required()
 def create_userworkout():
-    """Route to create a new userworkout"""
+    """Route to create a new user workout"""
     data = request.json
     user_id = data.get('user_id')
     workout_id = data.get('workout_id')
@@ -236,10 +237,10 @@ def create_userworkout():
     if not user_id or not workout_id or not startdate or not completiondate or not feedback:
         return jsonify({'error': 'Missing required fields'}), 400
 
-    # Convert startdate and completiondate from string to date
+    # Convert startdate and completiondate from ISO string to date
     try:
-        startdate = datetime.fromisoformat(startdate)
-        completiondate = datetime.fromisoformat(completiondate)
+        startdate = datetime.fromisoformat(startdate.replace('Z', '+00:00'))  # Handle 'Z' as UTC
+        completiondate = datetime.fromisoformat(completiondate.replace('Z', '+00:00'))
     except ValueError:
         return jsonify({'error': 'Invalid date format'}), 400
 
