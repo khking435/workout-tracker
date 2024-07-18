@@ -19,22 +19,20 @@ const ExerciseForm = () => {
       workout_id: Yup.number().required('Required')
     }),
     onSubmit: (values, { setSubmitting, resetForm }) => {
-      const newExercise = {
-        ...values
-      };
-
+      const newExercise = { ...values };
+      const token = localStorage.getItem('token'); 
+      
       fetch('http://localhost:5555/exercises', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` // Add Authorization header
         },
         body: JSON.stringify(newExercise)
       })
         .then(response => {
           if (!response.ok) {
-            throw new Error(
-              'Network response was not ok ' + response.statusText
-            );
+            throw new Error('Network response was not ok ' + response.statusText);
           }
           return response.json();
         })
