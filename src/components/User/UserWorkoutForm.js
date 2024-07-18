@@ -1,102 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-// Component for user workout form
-const UserWorkoutForm = ({ onSubmit }) => {
-    // State hooks for form fields
-    const [userID, setUserID] = useState('');
-    const [workoutID, setWorkoutID] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [completionDate, setCompletionDate] = useState('');
-    const [feedback, setFeedback] = useState('');
+const UserWorkoutForm = ({ userId }) => {
+  const navigate = useNavigate();
+  const [workout, setWorkout] = useState({
+    workoutId: '',
+    startDate: '',
+    completionDate: '',
+    feedback: ''
+  });
 
-    // Handle form submission
-    const handleSubmit = (e) => {
-        e.preventDefault(); // Prevent default form submission
-        const newUserWorkout = { userID, workoutID, startDate, completionDate, feedback };
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-        // Send POST request to API
-        fetch('http://127.0.0.1:5555/userworkouts', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newUserWorkout),
-        })
-            .then(response => response.json())
-            .then(data => {
-                onSubmit(data); // Call onSubmit prop with new user workout data
-                // Clear form fields
-                setUserID('');
-                setWorkoutID('');
-                setStartDate('');
-                setCompletionDate('');
-                setFeedback('');
-            })
-            .catch(error => console.error('Error adding user workout:', error));
-    };
+    const method = workout.id ? 'PUT' : 'POST'; // Use workout.id to determine if it's an edit or new entry
+    const url = workout.id ? `http://localhost:5555/userworkouts/${workout.id}` : 'http://localhost:5555/userworkouts';
 
-    return (
-        // Form element with Bootstrap styling
-        <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: 'auto' }}>
-            <div className="mb-3">
-                <label htmlFor="userID" className="form-label">User ID:</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="userID"
-                    value={userID}
-                    onChange={(e) => setUserID(e.target.value)}
-                    style={{ width: '100%' }}
-                />
-            </div>
-            <div className="mb-3">
-                <label htmlFor="workoutID" className="form-label">Workout ID:</label>
-                <input
-                    type="text"
-                    className="form-control"
-                    id="workoutID"
-                    value={workoutID}
-                    onChange={(e) => setWorkoutID(e.target.value)}
-                    style={{ width: '100%' }}
-                />
-            </div>
-            <div className="mb-3">
-                <label htmlFor="startDate" className="form-label">Start Date:</label>
-                <input
-                    type="date"
-                    className="form-control"
-                    id="startDate"
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                    style={{ width: '100%' }}
-                />
-            </div>
-            <div className="mb-3">
-                <label htmlFor="completionDate" className="form-label">Completion Date:</label>
-                <input
-                    type="date"
-                    className="form-control"
-                    id="completionDate"
-                    value={completionDate}
-                    onChange={(e) => setCompletionDate(e.target.value)}
-                    style={{ width: '100%' }}
-                />
-            </div>
-            <div className="mb-3">
-                <label htmlFor="feedback" className="form-label">Feedback:</label>
-                <textarea
-                    className="form-control"
-                    id="feedback"
-                    value={feedback}
-                    onChange={(e) => setFeedback(e.target.value)}
-                    style={{ width: '100%' }}
-                />
-            </div>
-            <div className="d-grid gap-2">
-                <button type="submit" className="btn btn-primary btn-block">Add User Workout</button>
-            </div>
-        </form>
-    );
+    // Format dates as ISO strings
+    const formattedStartDate = new Date(workout.startDate).toISOString().split('T')[0];
+    const formattedCompletionDate = new Date(workout.completionDate).toISOString().split('T')[0];
+
+    fetch(url, {
+      method: method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...workout,
+        startDate: formattedStartDate,
+        completionDate: formattedCompletionDate
+      })
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Failed to add user workout');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('User workout added:', data);
+      navigate('/userworkoutList'); // Redirect after successful submission
+    })
+    .catch(error => {
+      console.error('Error adding user workout:', error.message);
+      // Optionally, update state or display an error message to the user
+    });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setWorkout({ ...workout, [name]: value });
+  };
+
+  return (
+    <div>
+      <h1>New User Workout</h1>
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="workoutId" value={workout.workoutId} onChange={handleChange} placeholder="Workout ID" required />
+        <input type="date" name="startDate" value={workout.startDate} onChange={handleChange} required />
+        <input type="date" name="completionDate" value={workout.completionDate} onChange={handleChange} required />
+        <input type="text" name="feedback" value={workout.feedback} onChange={handleChange} placeholder="Feedback" required />
+
+        <button type="submit">Add User Workout</button>
+      </form>
+    </div>
+  );
 };
 
 export default UserWorkoutForm;
