@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
+// Component for creating or editing a workout
 const WorkoutForm = () => {
-  const { id } = useParams();
-  const navigate = useNavigate(); 
+  const { id } = useParams(); // Get the ID from the URL
+  const navigate = useNavigate(); // Navigation hook
   const [workout, setWorkout] = useState({
     name: '',
     date: '',
     duration: '',
     type: ''
-  });
+  }); // State to hold workout details
 
   useEffect(() => {
     if (id) {
@@ -18,24 +19,24 @@ const WorkoutForm = () => {
         .then(response => response.json())
         .then(data => setWorkout(data));
     }
-  }, [id]);
+  }, [id]); // Re-fetch workout details when ID changes
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setWorkout({ ...workout, [name]: value });
+    setWorkout({ ...workout, [name]: value }); // Update state with new input value
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const method = id ? 'PUT' : 'POST';
-    const url = id ? `http://localhost:5555/workouts/${id}` : 'http://localhost:5555/workouts';
+    const method = id ? 'PUT' : 'POST'; // Determine HTTP method based on whether it's an edit or new entry
+    const url = id ? `http://localhost:5555/workouts/${id}` : 'http://localhost:5555/workouts'; // Determine URL based on whether it's an edit or new entry
 
     fetch(url, {
       method: method,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(workout)
-    }).then(() => navigate('/workoutList')); 
+    }).then(() => navigate('/workoutList')); // Redirect to workout list after successful submission
   };
 
   return (
@@ -55,3 +56,4 @@ const WorkoutForm = () => {
 };
 
 export default WorkoutForm;
+
