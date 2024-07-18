@@ -3,34 +3,39 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 // Component for creating or editing a workout
 const WorkoutForm = () => {
-  const { id } = useParams(); // Get the ID from the URL
-  const navigate = useNavigate(); // Navigation hook
+  // Get the ID from the URL
+  const { id } = useParams(); 
+  // Navigation hook
+  const navigate = useNavigate(); 
+  // State to hold workout details
   const [workout, setWorkout] = useState({
     name: '',
     date: '',
     duration: '',
     type: ''
-  }); // State to hold workout details
+  }); 
 
+  // Fetch workout details for editing
   useEffect(() => {
     if (id) {
-      // Fetch workout details for editing
       fetch(`http://localhost:5555/workouts/${id}`)
         .then(response => response.json())
         .then(data => setWorkout(data));
     }
   }, [id]); // Re-fetch workout details when ID changes
 
+  // Update state with new input value
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setWorkout({ ...workout, [name]: value }); // Update state with new input value
+    setWorkout({ ...workout, [name]: value }); 
   };
 
+  // Determine HTTP method and URL based on whether it's an edit or new entry
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const method = id ? 'PUT' : 'POST'; // Determine HTTP method based on whether it's an edit or new entry
-    const url = id ? `http://localhost:5555/workouts/${id}` : 'http://localhost:5555/workouts'; // Determine URL based on whether it's an edit or new entry
+    const method = id ? 'PUT' : 'POST'; 
+    const url = id ? `http://localhost:5555/workouts/${id}` : 'http://localhost:5555/workouts'; 
 
     fetch(url, {
       method: method,
@@ -42,6 +47,7 @@ const WorkoutForm = () => {
   return (
     <div>
       <h1>{id ? 'Edit Workout' : 'New Workout'}</h1>
+      {/* Form for creating or editing a workout */}
       <form onSubmit={handleSubmit}>
         <input type="text" name="name" value={workout.name} onChange={handleChange} placeholder="Name" required />
         <input type="date" name="date" value={workout.date} onChange={handleChange} required />
