@@ -70,6 +70,7 @@ def register():
 
 # Routes for Users
 @app.route('/users', methods=['GET'])
+@jwt_required()
 def get_all_users():
     """Route to get all users"""
     users = User.query.all()
@@ -77,6 +78,7 @@ def get_all_users():
     return jsonify(users_list), 200
 
 @app.route('/users/<int:user_id>', methods=['GET'])
+@jwt_required()
 def get_user(user_id):
     """Route to get a specific user by ID"""
     user = User.query.get(user_id)
@@ -86,6 +88,7 @@ def get_user(user_id):
     return jsonify(user_data), 200
 
 @app.route('/users', methods=['POST'])
+@jwt_required()
 def create_user():
     """Route to create a new user"""
     data = request.json
@@ -103,6 +106,7 @@ def create_user():
     return jsonify({'message': 'User created successfully'}), 201
 
 @app.route('/users/<int:user_id>', methods=['PUT'])
+@jwt_required()
 def update_user(user_id):
     """Route to update an existing user"""
     user = User.query.get(user_id)
@@ -118,6 +122,7 @@ def update_user(user_id):
     return jsonify({'message': 'User updated successfully'}), 200
 
 @app.route('/users/<int:user_id>', methods=['DELETE'])
+@jwt_required()
 def delete_user(user_id):
     """Route to delete a user"""
     user = User.query.get(user_id)
@@ -132,6 +137,7 @@ def delete_user(user_id):
 # Routes for Workouts
 
 @app.route('/workouts', methods=['GET'])
+@jwt_required()
 def get_all_workouts():
     """Route to get all workouts"""
     workouts = Workout.query.all()
@@ -139,6 +145,7 @@ def get_all_workouts():
     return jsonify(workouts_list), 200
 
 @app.route('/workouts/<int:workout_id>', methods=['GET'])
+@jwt_required()
 def get_workout(workout_id):
     """Route to get a specific workout by ID"""
     workout = Workout.query.get(workout_id)
@@ -149,6 +156,7 @@ def get_workout(workout_id):
 
 
 @app.route('/workouts', methods=['POST'])
+@jwt_required()
 def create_workout():
     """Route to create a new workout"""
     data = request.json
@@ -168,6 +176,7 @@ def create_workout():
         return jsonify({'error': str(e)}), 500
 
 @app.route('/workouts/<int:workout_id>', methods=['DELETE'])
+@jwt_required()
 def delete_workout(workout_id):
     """Route to delete a workout"""
     workout = Workout.query.get(workout_id)
@@ -182,6 +191,7 @@ def delete_workout(workout_id):
 # Routes for UserWorkouts
 
 @app.route('/userworkouts', methods=['GET'])
+@jwt_required()
 def get_all_userworkouts():
     """Route to get all userworkouts"""
     userworkouts = UserWorkout.query.all()
@@ -196,6 +206,7 @@ def get_all_userworkouts():
     return jsonify(userworkouts_list), 200
 
 @app.route('/userworkouts/<int:userworkout_id>', methods=['GET'])
+@jwt_required()
 def get_userworkout(userworkout_id):
     """Route to get a specific userworkout by ID"""
     userworkout = UserWorkout.query.get(userworkout_id)
@@ -212,6 +223,7 @@ def get_userworkout(userworkout_id):
     return jsonify(userworkout_data), 200
 
 @app.route('/userworkouts', methods=['POST'])
+@jwt_required()
 def create_userworkout():
     """Route to create a new userworkout"""
     data = request.json
@@ -244,6 +256,7 @@ def create_userworkout():
     return jsonify({'message': 'UserWorkout created successfully'}), 201
 
 @app.route('/userworkouts/<int:userworkout_id>', methods=['DELETE'])
+@jwt_required()
 def delete_userworkout(userworkout_id):
     """Route to delete a userworkout"""
     userworkout = UserWorkout.query.get(userworkout_id)
@@ -258,6 +271,7 @@ def delete_userworkout(userworkout_id):
 # Routes for Exercises
 
 @app.route('/exercises', methods=['GET'])
+@jwt_required()
 def get_all_exercises():
     """Route to get all exercises"""
     exercises = Exercise.query.all()
@@ -265,6 +279,7 @@ def get_all_exercises():
     return jsonify(exercises_list), 200
 
 @app.route('/exercises/<int:exercise_id>', methods=['GET'])
+@jwt_required()
 def get_exercise(exercise_id):
     """Route to get a specific exercise by ID"""
     exercise = Exercise.query.get(exercise_id)
@@ -274,6 +289,7 @@ def get_exercise(exercise_id):
     return jsonify(exercise_data), 200
 
 @app.route('/exercises', methods=['POST'])
+@jwt_required()
 def create_exercise():
     """Route to create a new exercise"""
     data = request.json
@@ -294,6 +310,7 @@ def create_exercise():
 
 
 @app.route('/exercises/<int:exercise_id>', methods=['PUT'])
+@jwt_required()
 def update_exercise(exercise_id):
     """Route to update an existing exercise"""
     exercise = Exercise.query.get(exercise_id)
@@ -310,6 +327,7 @@ def update_exercise(exercise_id):
     return jsonify({'message': 'Exercise updated successfully'}), 200
 
 @app.route('/exercises/<int:exercise_id>', methods=['DELETE'])
+@jwt_required()
 def delete_exercise(exercise_id):
     """Route to delete an exercise"""
     exercise = Exercise.query.get(exercise_id)

@@ -7,7 +7,15 @@ const WorkoutList = () => {
   const [sort, setSort] = useState('date');
 
   useEffect(() => {
-    fetch('http://localhost:5555/workouts')
+    const token = localStorage.getItem('token');
+
+    fetch('http://localhost:5555/workouts', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    })
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

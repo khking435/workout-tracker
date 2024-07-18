@@ -11,3 +11,58 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.sidebar-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 15px; /* Initial width of the hover area */
+  background-color: transparent;
+  transition: width 0.3s;
+  z-index: 1000;
+}
+
+.sidebar-container:hover {
+  width: 200px;
+  background-color: rgb(16, 75, 90);
+}
+
+.sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(27, 90, 141);
+  overflow: hidden;
+  transition: width 0.5s;
+}
+
+.sidebar-links {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 20px;
+}
+
+.sidebar-links li {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.sidebar-links li a {
+  color: white;
+  text-decoration: none;
+  padding: 15px;
+  display: block;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.sidebar-links li a:hover {
+  background-color: rgba(255, 251, 251, 0.452);
+}
