@@ -7,8 +7,21 @@ const UserWorkoutList = () => {
   const [sort, setSort] = useState('startdate');
 
   useEffect(() => {
-    fetch("http://localhost:5555/userworkouts")
-      .then(response => response.json())
+    const token = localStorage.getItem('token');
+
+    fetch("http://localhost:5555/userworkouts", {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => setUserWorkouts(data))
       .catch(error => console.error('Error fetching user workouts:', error));
   }, []);

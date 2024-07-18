@@ -7,8 +7,21 @@ const ExerciseList = () => {
   const [sort, setSort] = useState('name');
 
   useEffect(() => {
-    fetch("http://localhost:5555/exercises")
-      .then(response => response.json())
+    const token = localStorage.getItem('token');
+    
+    fetch("http://localhost:5555/exercises", {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
       .then(data => setExercises(data))
       .catch(error => console.error('Error fetching exercises:', error));
   }, []);
