@@ -2,8 +2,8 @@ import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate from react-router-dom
-import '../index.css';
+import { useNavigate } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const SignupSchema = Yup.object().shape({
   username: Yup.string().required('Username is required'),
@@ -15,60 +15,69 @@ const SignupSchema = Yup.object().shape({
 });
 
 const Signup = () => {
-  const navigate = useNavigate();  // Initialize the navigate function
+  const navigate = useNavigate();
 
   return (
-    <div className="container">
-      <div className="box">
-        <h1 className="title">Sign Up</h1>
-        <Formik
-          initialValues={{ username: '', email: '', password: '', confirmPassword: '' }}
-          validationSchema={SignupSchema}
-          onSubmit={(values, { setSubmitting }) => {
-            axios.post('http://localhost:5555/register', values)
-              .then(response => {
-                alert(response.data.message);
-                setSubmitting(false);
-                navigate('/login');  // Redirect to the login page after successful registration
-              })
-              .catch(error => {
-                if (error.response) {
-                  alert(error.response.data.error);
-                } else {
-                  alert('An error occurred');
-                }
-                setSubmitting(false);
-              });
-          }}
-        >
-          {({ isSubmitting }) => (
-            <Form className="signup-form">
-              <div className="form-group">
-                <h2>GET AN ACCOUNT</h2>
-                <Field className="form-field" type="text" name="username" placeholder="Username" />
-                <ErrorMessage name="username" component="div" className="error" />
-              </div>
-              <div className="form-group">
-                <Field className="form-field" type="email" name="email" placeholder="Email" />
-                <ErrorMessage name="email" component="div" className="error" />
-              </div>
-              <div className="form-group">
-                <Field className="form-field" type="password" name="password" placeholder="Password" />
-                <ErrorMessage name="password" component="div" className="error" />
-              </div>
-              <div className="form-group">
-                <Field className="form-field" type="password" name="confirmPassword" placeholder="Confirm Password" />
-                <ErrorMessage name="confirmPassword" component="div" className="error" />
-              </div>
-              <button className="submit-button" type="submit" disabled={isSubmitting}>
-                {isSubmitting ? 'Signing up...' : 'Signup'}
-              </button>
-              <div className="link-container">
-                Already have an account? <a href="/login" className="link">Login</a>
-              </div>
-            </Form>
-          )}
-        </Formik>
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <div className="card">
+            <div className="card-body">
+              <h1 className="card-title text-center">Sign Up</h1>
+              <Formik
+                initialValues={{ username: '', email: '', password: '', confirmPassword: '' }}
+                validationSchema={SignupSchema}
+                onSubmit={(values, { setSubmitting }) => {
+                  axios.post('http://localhost:5555/register', values)
+                    .then(response => {
+                      alert(response.data.message);
+                      setSubmitting(false);
+                      navigate('/login');
+                    })
+                    .catch(error => {
+                      if (error.response) {
+                        alert(error.response.data.error);
+                      } else {
+                        alert('An error occurred');
+                      }
+                      setSubmitting(false);
+                    });
+                }}
+              >
+                {({ isSubmitting }) => (
+                  <Form>
+                    <div className="mb-3">
+                      <label htmlFor="username" className="form-label">Username</label>
+                      <Field className="form-control" type="text" name="username" placeholder="Username" />
+                      <ErrorMessage name="username" component="div" className="text-danger" />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="email" className="form-label">Email</label>
+                      <Field className="form-control" type="email" name="email" placeholder="Email" />
+                      <ErrorMessage name="email" component="div" className="text-danger" />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="password" className="form-label">Password</label>
+                      <Field className="form-control" type="password" name="password" placeholder="Password" />
+                      <ErrorMessage name="password" component="div" className="text-danger" />
+                    </div>
+                    <div className="mb-3">
+                      <label htmlFor="confirmPassword" className="form-label">Confirm Password</label>
+                      <Field className="form-control" type="password" name="confirmPassword" placeholder="Confirm Password" />
+                      <ErrorMessage name="confirmPassword" component="div" className="text-danger" />
+                    </div>
+                    <button className="btn btn-primary w-100" type="submit" disabled={isSubmitting}>
+                      {isSubmitting ? 'Signing up...' : 'Signup'}
+                    </button>
+                    <div className="mt-3 text-center">
+                      Already have an account? <a href="/login" className="link-primary">Login</a>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
