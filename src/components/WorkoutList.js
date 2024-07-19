@@ -68,7 +68,16 @@ const WorkoutList = () => {
         {filteredWorkouts.map(workout => (
           <li key={workout.id} className="list-group-item">
             <Link to={`/workouts/${workout.id}`} className="text-decoration-none">
-              {workout.name} - {workout.date} - {workout.duration} - {workout.type}
+              <div>
+                <strong>{workout.name}</strong> - {workout.date} - {workout.duration} - {workout.type}
+              </div>
+              <ul>
+                {workout.exercises?.map(exercise => (
+                  <li key={exercise.id}>
+                    {exercise.name} - Sets: {exercise.sets}, Reps: {exercise.reps}, Weight: {exercise.weight}
+                  </li>
+                ))}
+              </ul>
             </Link>
           </li>
         ))}
